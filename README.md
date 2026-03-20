@@ -1,10 +1,10 @@
-# Empirical Analysis of Search Structures-ADA-Ass3-Question 8
+# Empirical Analysis of Search Structures (ADA Ass3 Question 8)
 
 Author: Aye Khin Khin Hpone (Yolanda Lim) - st125970
 
 ## Table of Contents
 
-- [Empirical Analysis of Search Structures-ADA-Ass3-Question 8](#empirical-analysis-of-search-structures-ada-ass3-question-8)
+- [Empirical Analysis of Search Structures (ADA Ass3 Question 8)](#empirical-analysis-of-search-structures-ada-ass3-question-8)
   - [Table of Contents](#table-of-contents)
   - [1. Project Overview](#1-project-overview)
   - [2. Implementation Approach](#2-implementation-approach)
@@ -16,12 +16,14 @@ Author: Aye Khin Khin Hpone (Yolanda Lim) - st125970
     - [4.1 Random Input](#41-random-input)
     - [4.2 Sorted Input](#42-sorted-input)
     - [4.3 Adversarial Input](#43-adversarial-input)
-  - [5. Performance Results](#5-performance-results)
+  - [5. Results](#5-results)
     - [Insertion Time](#insertion-time)
     - [Successful Search Time](#successful-search-time)
     - [Unsuccessful Search Time](#unsuccessful-search-time)
-  - [6. Discussion and Interpretation](#6-discussion-and-interpretation)
-  - [7. How to Run](#7-how-to-run)
+    - [Full-Run Highlights (from `results/experiment_summary.csv`)](#full-run-highlights-from-resultsexperiment_summarycsv)
+  - [6. Discussion](#6-discussion)
+  - [7. Conclusion](#7-conclusion)
+  - [8. How to Run](#8-how-to-run)
 
 ## 1. Project Overview
 
@@ -31,7 +33,7 @@ This project compares three search structures for ADA2026 Assignment 3 Question 
 - Red-Black Tree
 - Hash Table (separate chaining)
 
-The program measures insertion and search performance under multiple input patterns and exports results as CSV tables and plots.
+The program measures insertion and search performance under multiple input patterns and exports the results as CSV tables and plots.
 
 Main files:
 
@@ -46,14 +48,14 @@ Main files:
 - Iterative `insert` and `search`
 - No self-balancing
 - Height measured by BFS after insertion
-- Expected worst-case height approaches $n$ for ordered insertions
+- Expected worst-case height approaches $n$ for ordered insertions.
 
 ### 2.2 Red-Black Tree
 
 - Uses a `NIL` sentinel node
 - Rebalancing through recoloring and rotations after insertion
 - Iterative `search`
-- Height expected to stay $O(\log n)$
+- Height is expected to stay $O(\log n)$.
 
 ### 2.3 Hash Table
 
@@ -96,11 +98,11 @@ Run modes:
 
 - Trees use reverse-sorted insertion
 - Hash table uses multiples of table size so keys collide strongly
-- Highlights worst-case or near-worst-case degradation behavior
+- Highlights worst-case or near-worst-case degradation behavior.
 
-## 5. Performance Results
+## 5. Results
 
-The script generates these files:
+The script generates these full-mode evidence files:
 
 - `results/experiment_summary.csv`
 - `results/experiment_trials.csv`
@@ -120,12 +122,31 @@ The script generates these files:
 
 ![Unsuccessful Search Plot](results/search_miss_times.png)
 
-CSV evidence for this report is provided in:
+CSV evidence used for this report is in:
 
 - `results/experiment_summary.csv`
 - `results/experiment_trials.csv`
 
-These files are the raw performance results, while the plots above are the visual summary.
+These CSV files are the raw measured data, and the plots above are visual summaries from the same run.
+
+### Full-Run Highlights (from `results/experiment_summary.csv`)
+
+At `n=100,000`:
+
+- **Sorted pattern**
+  - BST: insert `221.467 s`, hit search `2.384 s`, height `100000`
+  - Red-Black Tree: insert `0.351 s`, hit search `0.001693 s`, height `31`
+  - Hash Table: insert `0.016 s`, hit search `0.000298 s`, collisions `0`
+
+- **Adversarial pattern** (BST reverse-sorted, hash all-same-bucket)
+  - BST: insert `144.198 s`, miss search `3.405 s`, height `100000`
+  - Red-Black Tree: insert `0.215 s`, miss search `0.001433 s`, height `31`
+  - Hash Table: insert `28.499 s`, hit search `0.314 s`, collisions `99999`
+
+- **Random pattern**
+  - BST: height `40.67`
+  - Red-Black Tree: height `20.00`
+  - Hash Table: load factor `0.769`, average non-empty chain length `1.39`
 
 Important for final submission:
 
@@ -135,17 +156,21 @@ Important for final submission:
 python search_structures_yolanda.py --mode full
 ```
 
-## 6. Discussion and Interpretation
+## 6. Discussion
 
-Expected interpretation:
+The measured results match the expected complexity trends:
 
-- BST is fast on random input but degrades heavily for ordered/adversarial insertion.
-- Red-Black Tree keeps stable logarithmic behavior across patterns.
-- Hash Table is near constant-time on normal patterns but degrades when collisions are concentrated.
+- **BST**: very sensitive to insertion order. With sorted or reverse-sorted data, tree height reaches `n`, causing very high insertion and search times.
+- **Red-Black Tree**: remains balanced across all patterns (height around `31` at `n=100,000`), so insertion and search stay consistently low.
+- **Hash Table**: excellent average performance on random/sorted distributions, but degrades strongly under forced-collision adversarial input.
 
-If your full-mode results follow this trend, empirical behavior aligns with theoretical complexity.
+This confirms that balancing (Red-Black Tree) improves worst-case behavior for tree-based search, while hash-table performance depends heavily on key distribution and collision behavior.
 
-## 7. How to Run
+## 7. Conclusion
+
+This empirical study confirms the expected behavior of the three data structures under average and worst-case inputs. The BST is highly sensitive to insertion order and becomes impractical at large `n` under sorted or reverse-sorted patterns, as shown by its extreme insertion/search times and height growth to `100000`. The Red-Black Tree maintains balanced height and consistently low operation times across all tested patterns, making it the most robust tree-based option for unpredictable inputs. The Hash Table provides the fastest average performance when key distribution is favorable, but adversarial collisions significantly degrade insertion and successful-search performance. Overall, the full-mode results in `results/experiment_summary.csv` and `results/experiment_trials.csv`, together with the generated plots, provide strong empirical evidence aligned with theoretical time-complexity analysis.
+
+## 8. How to Run
 
 1. Install dependencies:
 
@@ -153,13 +178,13 @@ If your full-mode results follow this trend, empirical behavior aligns with theo
 pip install -r requirements.txt
 ```
 
-1. Quick validation run:
+1. Run a quick validation:
 
 ```powershell
 python search_structures_yolanda.py --mode quick
 ```
 
-1. Final assignment run:
+1. Run the final assignment benchmark:
 
 ```powershell
 python search_structures_yolanda.py --mode full
