@@ -1,10 +1,10 @@
-# Empirical Analysis of Search Structures
+# Empirical Analysis of Search Structures-ADA-Ass3-Question 8
 
 Author: Aye Khin Khin Hpone (Yolanda Lim) - st125970
 
 ## Table of Contents
 
-- [Empirical Analysis of Search Structures](#empirical-analysis-of-search-structures)
+- [Empirical Analysis of Search Structures-ADA-Ass3-Question 8](#empirical-analysis-of-search-structures-ada-ass3-question-8)
   - [Table of Contents](#table-of-contents)
   - [1. Project Overview](#1-project-overview)
   - [2. Implementation Approach](#2-implementation-approach)
@@ -22,8 +22,6 @@ Author: Aye Khin Khin Hpone (Yolanda Lim) - st125970
     - [Unsuccessful Search Time](#unsuccessful-search-time)
   - [6. Discussion and Interpretation](#6-discussion-and-interpretation)
   - [7. How to Run](#7-how-to-run)
-  - [8. Requirements Coverage](#8-requirements-coverage)
-  - [9. Submission Checklist](#9-submission-checklist)
 
 ## 1. Project Overview
 
@@ -172,24 +170,3 @@ Notes:
 - Quick mode writes to `results_quick/`
 - Full mode writes to `results/`
 - Full mode can take longer because BST worst-case insertion is intentional
-
-## 8. Requirements Coverage
-
-The assignment asks for the following submission items. This report addresses each item directly:
-
-- Implementation approach → [Section 2](#2-implementation-approach)
-- Experimental setup → [Section 3](#3-experimental-setup)
-- Dataset design → [Section 4](#4-dataset-design)
-- Performance results → [Section 5](#5-performance-results) + CSV artifacts in `results/`
-- Discussion and interpretation → [Section 6](#6-discussion-and-interpretation)
-
-## 9. Submission Checklist
-
-- `search_structures_yolanda.py`
-- `README.md`
-- `requirements.txt`
-- `results/experiment_summary.csv`
-- `results/experiment_trials.csv`
-- `results/insert_times.png`
-- `results/search_hit_times.png`
-- `results/search_miss_times.png`
